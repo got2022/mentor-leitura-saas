@@ -46,9 +46,26 @@ def simular_avaliacao_e_feedback(nivel: str, genero: str, resposta_aluno_esta_co
             st.error(f"❌ Atenção! Sua resposta precisa de refinamento.")
             st.info(f"💡 Dica: {dados_genero[f'ajuda_{nivel}']}")
 
-def analisar_texto_e_gerar_roteiro(texto: str, genero_escolhido: str):
-    if genero_escolhido not in GENEROS_TEXTUAIS:
-        return None, None
+data = GENEROS_TEXTUAIS[genero_escolhido]
+
+perguntas_roteiro = []
+# Cria uma lista de níveis/competências para iterar (C1, C2, C3... ou LITERAL, INFERENCIAL...)
+niveis = [p["nivel"] for p in data["perguntas"]] 
+
+for nivel in niveis:
+    # Pega a pergunta correta para o nível/competência atual
+    perguntas_do_nivel = [p for p in data["perguntas"] if p["nivel"] == nivel]
+    
+    # Garante que ele escolhe apenas uma pergunta por nível (se houver)
+    if perguntas_do_nivel:
+        perguntas_roteiro.append(random.choice(perguntas_do_nivel))
+        
+# O RETURN AGORA ESTÁ FORA DO LOOP, GARANTINDO TODAS AS PERGUNTAS.
+return data["caracteristicas"], perguntas_roteiro 
+```
+
+
+
 
     data = GENEROS_TEXTUAIS[genero_escolhido]
     
