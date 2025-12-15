@@ -45,7 +45,6 @@ GENEROS = {
         "ajuda_critico": "Pense no viés. O texto é neutro ou favorece uma parte?",
     },
 
-    # Este bloco foi incluído para evitar erros de sintaxe no restante do seu código.
     "Notícia": {
         "caracteristicas": [
             "Linguagem objetiva e formal.",
@@ -66,7 +65,7 @@ GENEROS = {
     }
 }
 
-# Funções auxiliares (Corrigidas e simplificadas)
+# Funções auxiliares
 def simular_avaliacao_e_feedback(nivel: str, genero_escolhido: str, resposta_aluno_esta_correta: bool):
     """ Simula a avaliação de uma resposta e gera o feedback construtivo. """
     dados_genero = GENEROS.get(genero_escolhido)
@@ -74,7 +73,6 @@ def simular_avaliacao_e_feedback(nivel: str, genero_escolhido: str, resposta_alu
     if dados_genero:
         st.subheader(f"--- FEEDBACK NÍVEL {nivel.upper()} ---")
 
-        # Os campos no dicionário são 'feedback_literal' e 'ajuda_literal' (e suas variações)
         feedback_key = f'feedback_{nivel}'
         ajuda_key = f'ajuda_{nivel}'
 
