@@ -1,5 +1,5 @@
 import streamlit as st
-import random 
+import random
 
 # ----------------------------------------------------------------------------------
 # 1. Base de Conhecimento e Funções (O CÉREBRO)
@@ -16,16 +16,16 @@ GENEROS = {
         "literal": ["Qual a principal tese defendida pelo autor?"],
         "inferencial": ["A qual grupo social o autor parece se dirigir ao usar o termo 'nós'?"],
         "critico": ["O posicionamento do autor é atual ou datado? Justifique, considerando o contexto social do RJ."],
-        
+
         "feedback_literal": "Acertou! Você identificou a informação no texto, que é o primeiro passo para a leitura.",
         "feedback_inferencial": "Ótima conexão! Você conseguiu deduzir o sentido implícito. Prossiga para o senso crítico.",
         "feedback_critico": "Excelente argumento! Seu posicionamento está embasado e considera o contexto do gênero. Continue a construir seu repertório.",
-        
+
         "ajuda_literal": "Revise o primeiro parágrafo. A resposta é explícita.",
         "ajuda_inferencial": "Leia as entrelinhas. Qual a intenção do autor ao usar essa palavra? Tente conectar duas ideias diferentes.",
         "ajuda_critico": "Lembre-se das características do Artigo de Opinião: sua resposta deve ter uma TESE. Qual é a sua tese sobre o assunto?",
     },
-    
+
     "Conto": {
         "caracteristicas": [
             "Narrativa curta com poucos personagens.",
@@ -35,18 +35,17 @@ GENEROS = {
         "literal": ["Quem são os personagens principais e onde a história se passa?"],
         "inferencial": ["Qual a principal emoção ou estado de espírito do protagonista? Qual trecho sugere isso?"],
         "critico": ["O Conto reflete algum aspecto da realidade social? Qual e por quê?"],
-        
+
         "feedback_literal": "Acerto! Localização de fatos dominada.",
         "feedback_inferencial": "Conseguiu ler as entrelinhas da notícia.",
         "feedback_critico": "Avaliação ética e social do fato noticiado foi fundamentada.",
-        
+
         "ajuda_literal": "Busque o Lide: Onde, quem, o quê.",
         "ajuda_inferencial": "O que a notícia implica, mas não diz abertamente?",
         "ajuda_critico": "Pense no viés. O texto é neutro ou favorece uma parte?",
     },
-    
+
     # Este bloco foi incluído para evitar erros de sintaxe no restante do seu código.
-    # Ele será usado como um backup caso os outros dois gêneros não sejam suficientes no futuro.
     "Notícia": {
         "caracteristicas": [
             "Linguagem objetiva e formal.",
@@ -56,11 +55,11 @@ GENEROS = {
         "literal": ["Qual foi o principal fato noticiado e quem são os envolvidos?"],
         "inferencial": ["Qual a possível causa não declarada para a omissão de um nome na notícia?"],
         "critico": ["O veículo de comunicação demonstrou parcialidade? Justifique."],
-        
+
         "feedback_literal": "Acerto! Localização de fatos dominada.",
         "feedback_inferencial": "Conseguiu ler as entrelinhas da notícia.",
         "feedback_critico": "Avaliação ética e social do fato noticiado foi bem fundamentada.",
-        
+
         "ajuda_literal": "Busque o Lide: Onde, quem, o quê.",
         "ajuda_inferencial": "O que a notícia implica, mas não diz abertamente?",
         "ajuda_critico": "Pense no viés. O texto é neutro ou favorece uma parte?",
@@ -78,7 +77,7 @@ def simular_avaliacao_e_feedback(nivel: str, genero_escolhido: str, resposta_alu
         # Os campos no dicionário são 'feedback_literal' e 'ajuda_literal' (e suas variações)
         feedback_key = f'feedback_{nivel}'
         ajuda_key = f'ajuda_{nivel}'
-        
+
         if resposta_aluno_esta_correta and feedback_key in dados_genero:
             st.success(f"✅ Acerto! {dados_genero[feedback_key]}")
         elif not resposta_aluno_esta_correta and ajuda_key in dados_genero:
@@ -90,7 +89,7 @@ def simular_avaliacao_e_feedback(nivel: str, genero_escolhido: str, resposta_alu
 
 def analisar_texto_e_gerar_roteiro(texto: str, genero_escolhido: str):
     """ Gera o roteiro de leitura guiada no Streamlit. """
-    
+
     genero_data = GENEROS.get(genero_escolhido)
 
     if not genero_data:
@@ -111,11 +110,11 @@ def analisar_texto_e_gerar_roteiro(texto: str, genero_escolhido: str):
     for i, nivel in enumerate(niveis_leitura):
         if nivel in genero_data and genero_data[nivel]:
             st.markdown(f"##### {i+1}. NÍVEL {nivel.upper()} ({nivel.capitalize()})")
-            
+
             # Pega a primeira pergunta do nível (como os valores são listas, usa [0])
             pergunta = genero_data[nivel][0]
             st.markdown(f"**Pergunta:** {pergunta}")
-            
+
             # SIMULAÇÃO: O aluno acertou o literal e o crítico, mas errou o inferencial
             simular_acerto = (nivel != 'inferencial')
             simular_avaliacao_e_feedback(nivel, genero_escolhido, simular_acerto)
